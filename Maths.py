@@ -1,24 +1,20 @@
-import math 
-  
-# Find the first digit 
-def firstDigit(n) : 
-      
-    # Find total number of digits - 1 
-    digits = (int)(math.log10(n)) 
-  
-    # Find first digit 
-    n = (int)(n / pow(10, digits)) 
-  
-    # Return first digit 
-    return n; 
-  
-# Find the last digit 
-def lastDigit(n) : 
-      
-    # return the last digit 
-    return (n % 10) 
-  
-# Driver Code 
-n = 98562; 
-print(firstDigit(n), end = " ")  
-print(lastDigit(n)) 
+import math
+
+'''
+Total digits = (int)(math.log10(n)+1)
+First digit = (int)(n / pow(10, digits))
+last digit = (n % 10)
+'''
+
+
+def evenlyDivides(self, N):  # gfg
+    # 12 -> 2
+    # 22074 -> 2 (0 is a digit may raise ZerodivisionError)
+    count = 0
+    real = N
+    while N:
+        last = N % 10
+        if last != 0 and real % last == 0:  # zeroDivisionError handled
+            count += 1
+        N = N//10
+    return count
