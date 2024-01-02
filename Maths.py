@@ -18,3 +18,16 @@ def evenlyDivides(self, N):  # gfg
             count += 1
         N = N//10
     return count
+
+
+def reverse_digit(self, n):  # gfg
+    # array,string -> use Two pointer
+    digit = 0
+    while n:
+        last = n % 10
+        digit = (10*digit)+last
+        n = n//10
+    return digit
+
+
+

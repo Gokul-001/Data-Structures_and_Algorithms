@@ -12,28 +12,28 @@ def generateParenthesis(n):
     outputList = []
     dfs(0, 0, "")
     return outputList
-# print(generateParenthesis(2))
 
 
-def Solve(numTrains, bookings, booklen):
+# print(generateParenthesis(4))
+
+
+def HaidyTrainAssignment(numTrains, bookings, booklen):
 
     inputList = []
     for i in range(bookings):
         # inputList = [[1, 2, 10], [2, 3, 20], [2, 5, 25]]
         inputList.append(list(map(int, input().split(' '))))
 
-    outputlist = [10000]*numTrains  # [10000, 10000, 10000, 10000, 10000]
+    outputlist = [10000]*numTrains  # [10000, 10000, 10000, 10000, 10000] price
     trainList = list(range(1, numTrains+1))  # [1, 2, 3, 4, 5]
     for outer in inputList:
-        start = outer[0]
-        end = outer[1]
-        value = outer[2]
+        (start, end, value) = (outer)
         for i in trainList:
             if i in range(start, end+1):
                 outputlist[i-1] -= value
 
     return outputlist
-# print(Solve(4, 5, 3))
+# print(HaidyTrainAssignment(4, 5, 3))
 
 
 def duplicateIndex(str):
@@ -89,10 +89,6 @@ def lengthOfLongestSubstring(s: str) -> int:
         seen[char] = right
     return maxlen
 # print(lengthOfLongestSubstring("abcabcbb"))
-    """for key, val in hashmap.items():
-        print(key, '', val)
-        if val > maxval:
-            maxval = val"""
 
 
 def majorityElement(nums):
@@ -111,3 +107,81 @@ def majorityElement(nums):
     return candidate
 
 # print(majorityElement(nums=[1, 2, 3, 4, 1, 4]))
+
+
+def seiveOfEratosthenes(num):
+    '''
+    prints all prime number till the given number
+      '''
+    prime_arr = [True]*(num+1)
+
+    if num < 2:
+        raise Exception("No prime number exists")
+
+    p = 2
+    while p*p <= num:
+        if prime_arr[p]:
+            for j in range(p*p, num+1, p):
+                prime_arr[j] = False
+        p += 1
+    for p in range(2, num+1):
+        if prime_arr[p]:
+            print(p)
+
+
+# print(seiveOfEratosthenes(11))
+
+def minSubarrayCount(arr, val):
+    left = right = 0
+    count = float('inf')
+    if len(arr) <= 1 and arr[0] != val:
+        return "Invalid array"
+    while left <= right and right < len(arr):
+        cursum = sum(arr[left:right+1])
+        if cursum >= val:
+            count = min(count, right-left+1)
+            left += 1
+        else:
+            right += 1
+    return count
+
+
+arr = [1]
+# print(minSubarrayCount(arr, val=15))
+
+
+def maxLengthBetweenEqualCharacters(s: str) -> int:
+
+    maxlen = curr = -1
+    if len(s) <= 1:
+        return -1
+    for left in range(0, len(s)-1):
+        for right in range(left+1, len(s)):
+            if s[left] == s[right]:
+                curr = (right-left)-1
+        maxlen = max(curr, maxlen)
+    return maxlen
+
+
+# s = "aa"
+# print(maxLengthBetweenEqualCharacters(s))
+
+def findMatrix(nums):  # leet -2610 :Convert an Array Into a 2D Array With Conditions
+
+    def helper(nums, output):
+        if len(nums) == 0:
+            return output
+        else:
+            hashset = set()
+            # Deep  copy [any changes made to a copy of the object do not reflect in the original object]
+            arr = nums.copy()
+            for ele in nums:
+                if ele not in hashset:
+                    hashset.add(ele)
+                    arr.remove(ele)
+            output.append(list(hashset))
+            return helper(arr, output)
+    return helper(nums, output=[])
+
+
+# print(findMatrix([1, 3, 4, 1, 2, 3, 1]))
