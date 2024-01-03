@@ -1,3 +1,6 @@
+import itertools
+
+
 def generateParenthesis(n):
     def dfs(open, close, outputStr):
         if len(outputStr) == n*2:
@@ -185,3 +188,25 @@ def findMatrix(nums):  # leet -2610 :Convert an Array Into a 2D Array With Condi
 
 
 # print(findMatrix([1, 3, 4, 1, 2, 3, 1]))
+
+
+def gcd_Two(a, b):
+    gcd = 1
+    # if u want large range iter = itertools.zip_longest
+    for i, j in zip(range(1, a+1), range(1, b+1)):
+        if a % i == 0 and b % j == 0:
+            gcd = i
+    return gcd
+
+
+print(gcd_Two(3, 7))
+
+
+def findDuplicate(arr):
+    num = 1
+    for ele in arr:
+        num = num ^ ele  # num ^ num =0  / num ^ 1 =num
+    return num
+
+
+print(findDuplicate([2, 1, 5, 3, 4, 5]))
