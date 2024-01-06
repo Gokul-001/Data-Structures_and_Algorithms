@@ -199,7 +199,7 @@ def gcd_Two(a, b):
     return gcd
 
 
-print(gcd_Two(3, 7))
+# print(gcd_Two(3, 7))
 
 
 def findDuplicate(arr):
@@ -209,4 +209,21 @@ def findDuplicate(arr):
     return num
 
 
-print(findDuplicate([2, 1, 5, 3, 4, 5]))
+# print(findDuplicate([2, 1, 5, 3, 4, 5]))
+
+# leetcode :  2125. Number of Laser Beams in a Bank
+def numberOfBeams(bank: list[str]) -> int:
+    lasercount = []
+    for floor in bank:
+        val = floor.count("1")
+        if val > 0:  # ignre 0 ease of multiplication
+            lasercount.append(val)  # [3, 2, 1]
+
+    # try sliding windwow k=2
+    ans = 0
+    for idx in range(0, len(lasercount)-1):
+        ans += lasercount[idx]*lasercount[idx+1]  # ans = [3*2]+[2*1]
+    return ans
+
+
+print(numberOfBeams(["011001", "000000", "010100", "001000"]))
