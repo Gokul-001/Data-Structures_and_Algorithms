@@ -261,4 +261,28 @@ def buddyStrings(s: str, goal: str) -> bool:
 
 s = "aaaaaaabc"
 goal = "aaaaaaacb"
-print(buddyStrings(s, goal))
+#print(buddyStrings(s, goal))
+
+def numSquares( n: int) -> int:
+
+    per_sq =[]
+
+    sqrt=int((n)**0.5) # n=100
+
+    for i in range(1,sqrt+1):
+        per_sq.append(i*i) #[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+
+    dp=[float('inf')] * (n+1)
+    dp[0]=0
+    dp[1]=1
+
+    for i in range (2,n+1): # for loop for dp traversal
+        for sq in per_sq:
+            if i ==  sq:
+                dp[i]=1
+            elif sq < i :
+                dp[i]=min(dp[i],dp[i-sq]+dp[sq])
+        print(dp)
+    return dp[-1]
+
+print(numSquares(12))
