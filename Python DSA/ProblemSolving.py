@@ -285,4 +285,25 @@ def numSquares( n: int) -> int:
         print(dp)
     return dp[-1]
 
-print(numSquares(12))
+#print(numSquares(12))
+
+nums = [1,2,3]
+#Output: [1,2]
+def largestDivisibleSubset(nums):
+    if not nums:
+        return []
+
+    nums.sort()
+    dp = [[num] for num in nums]  # Initialize the dynamic programming table
+
+    for i in range(len(nums)):
+        for j in range(i):
+            if nums[i] % nums[j] == 0 and len(dp[i]) < len(dp[j]) + 1:
+                dp[i] = dp[j] + [nums[i]]  # Update the subset if the condition is satisfied
+
+    return max(dp, key=len)  # Return the largest subset found
+
+# Test the function
+nums = [1, 2, 3, 4, 6, 8, 12]
+print("Largest Divisible Subset:", largestDivisibleSubset(nums))
+
