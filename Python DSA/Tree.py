@@ -1,16 +1,54 @@
-#binary tree implementation
-
 class Node:
-    def __init__(self,val):
-        self.data=val
-        self.left=None
-        self.right=None
+    def __init__(self, item):
+        self.left = None
+        self.right = None
+        self.val = item
 
-    def __str__(self):
-        return f"< Node data : {self.data}>" 
 
-if __name__=="__main__":
-    node3=Node(3)
-    node2=Node(2)
-    node1=Node(1)
-    print(node2.__str__())
+def inorder(root):
+
+    if root:
+        # Traverse left
+        inorder(root.left)
+        # Traverse root
+        print(str(root.val) + "->", end='')
+        # Traverse right
+        inorder(root.right)
+
+
+def postorder(root):
+
+    if root:
+        # Traverse left
+        postorder(root.left)
+        # Traverse right
+        postorder(root.right)
+        # Traverse root
+        print(str(root.val) + "->", end='')
+
+
+def preorder(root):
+
+    if root:
+        # Traverse root
+        print(str(root.val) + "->", end=' ')
+        # Traverse left
+        preorder(root.left)
+        # Traverse right
+        preorder(root.right)
+
+
+root = Node(1)
+root.left = Node(2)
+root.right = Node(3)
+root.left.left = Node(4)
+root.left.right = Node(5)
+
+print("Inorder traversal ")
+inorder(root)
+
+print("\nPreorder traversal ")
+preorder(root)
+
+print("\nPostorder traversal ")
+postorder(root)
