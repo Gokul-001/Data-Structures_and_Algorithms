@@ -1,3 +1,6 @@
+from queue import Queue
+
+
 class Node:
     def __init__(self, item):
         self.left = None
@@ -10,23 +13,16 @@ class BinaryTree(Node):
         self.root=None
     
     def insertNode(self,val):
-        node=Node(val)
-        if self.root == None :
-            self.root=node
-        else:
-            self.insertRecursive(self.root,val)
+        self.root=self._insert(self.root,val)
     
-    def insertRecursive(self,node,val):
-        if node.data > val:
-            if node.left != None:
-                self.insertRecursive(node.left,val)
-            else:
-                node.left = Node(val)
-        else:
-            if node.right !=None:
-                self.insertRecursive(node.right,val)
-            else:
-                node.right=Node(val)
+    def _insert(self, root, val):
+        if root is None:
+            return Node(val)
+        if val < root.data:
+            root.left = self._insert(root.left, val)
+        elif val > root.data:
+            root.right = self._insert(root.right, val)
+        return root
 
     def inorder(self,root):
 
@@ -38,27 +34,38 @@ class BinaryTree(Node):
             # Traverse right
             self.inorder(root.right)
 
+    def bfs(self,root):
+        queue=Queue()
+        queue.put(root)
+        while not queue.empty():
+            node=queue.get()
+            print(node.data,end=" --> ")
+            if node.left:
+                queue.put(node.left)
+            if node.right:
+                queue.put(node.right)
 
-def postorder(root):
 
-    if root:
-        # Traverse left
-        postorder(root.left)
-        # Traverse right
-        postorder(root.right)
-        # Traverse root
-        print(str(root.val) + "->", end='')
+    def postorder(self,root):
+
+        if root:
+            # Traverse left
+            self.postorder(root.left)
+            # Traverse right
+            self.postorder(root.right)
+            # Traverse root
+            print(str(root.data) + " --> ", end='')
 
 
-def preorder(root):
+    def preorder(self,root):
 
-    if root:
-        # Traverse root
-        print(str(root.val) + "->", end=' ')
-        # Traverse left
-        preorder(root.left)
-        # Traverse right
-        preorder(root.right)
+        if root:
+            # Traverse root
+            print(str(root.data) + " --> ", end='')
+            # Traverse left
+            self.preorder(root.left)
+            # Traverse right
+            self.preorder(root.right)
 
 
 if __name__=="__main__":
@@ -66,7 +73,18 @@ if __name__=="__main__":
     bt.insertNode(1)
     bt.insertNode(2)
     bt.insertNode(3)
+    bt.insertNode(4)
+    bt.insertNode(5)
+    bt.insertNode(6)
+    bt.insertNode(7)
+    print("Inorder Traversal")
     bt.inorder(bt.root)
+    print("\nPreorder Traversal")
+    bt.preorder(bt.root)
+    print("\nPostorder Traversal")
+    bt.postorder(bt.root)
+    print("\nBreadth first search ")
+    bt.bfs(bt.root)
 
 
 
