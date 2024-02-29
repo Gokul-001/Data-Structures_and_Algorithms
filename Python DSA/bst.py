@@ -1,99 +1,117 @@
-# Binary Search Tree operations in Python
-
-
-# Create a node
 class Node:
-    def __init__(self, key):
-        self.key = key
+    def __init__(self, item):
         self.left = None
         self.right = None
+        self.data = item
+
+class Queue:
+    def __init__(self, size):
+        self.front = self.rear = -1
+        self.size = size
+        self.Q = [None] * size
+
+    def enqueue(self, x):
+        if self.rear == self.size - 1:
+            print("Queue Full")
+        else:
+            self.rear += 1
+            self.Q[self.rear] = x
+
+    def dequeue(self):
+        if self.front == self.rear:
+            print("Queue is Empty")
+        else:
+            self.front += 1
+            x = self.Q[self.front]
+            return x
+
+    def is_empty(self):
+        return self.front == self.rear
+
+class BinaryTree:
+    def __init__(self):
+        self.root = None
+
+    def insert_node(self, val):
+        node = Node(val)
+        if self.root is None:
+            self.root = node
+        else:
+            self._insert_recursive(self.root, val)
+
+    def _insert_recursive(self, node, val):
+        if node.data > val:
+            if node.left is not None:
+                self._insert_recursive(node.left, val)
+            else:
+                node.left = Node(val)
+        else:
+            if node.right is not None:
+                self._insert_recursive(node.right, val)
+            else:
+                node.right = Node(val)
+
+    def inorder(self, root):
+        if root:
+            self.inorder(root.left)
+            print(str(root.data) + " --> ", end='')
+            self.inorder(root.right)
+
+    def create_tree(self):
+        q = Queue(7)
+        print("Enter root value: ", end="")
+        x = int(input())
+        self.root = Node(x)
+        q.enqueue(self.root)
+        while not q.is_empty():
+            p = q.dequeue()
+            print("Enter left child of", p.data, ": ", end="")
+            x = int(input())
+            if x != -1:
+                t = Node(x)
+                p.left = t
+                q.enqueue(t)
+            print("Enter right child of", p.data, ": ", end="")
+            x = int(input())
+            if x != -1:
+                t = Node(x)
+                p.right = t
+                q.enqueue(t)
+
+    def preorder(self, root):
+        if root:
+            print(str(root.data) + " --> ", end='')
+            self.preorder(root.left)
+            self.preorder(root.right)
+
+    def postorder(self, root):
+        if root:
+            self.postorder(root.left)
+            self.postorder(root.right)
+            print(str(root.data) + " --> ", end='')
+
+    def levelorder(self, root):
+        q = Queue(100)
+        print(root.data, end=" ")
+        q.enqueue(root)
+        while not q.is_empty():
+            root = q.dequeue()
+            if root.left:
+                print(root.left.data, end=" ")
+                q.enqueue(root.left)
+            if root.right:
+                print(root.right.data, end=" ")
+                q.enqueue(root.right)
 
 
-# Inorder traversal
-def inorder(root):
-    if root is not None:
-        # Traverse left
-        inorder(root.left)
-
-        # Traverse root
-
-        # Traverse right
-        inorder(root.right)
-        print(str(root.key) + "->", end=' ')
-
-
-# Insert a node
-def insert(node, key):
-
-    # Return a new node if the tree is empty
-    if node is None:
-        return Node(key)
-
-    # Traverse to the right place and insert the node
-    if key < node.key:
-        node.left = insert(node.left, key)
-    else:
-        node.right = insert(node.right, key)
-
-    return node
-
-
-# Find the inorder successor
-def minValueNode(node):
-    current = node
-
-    # Find the leftmost leaf
-    while(current.left is not None):
-        current = current.left
-
-    return current
-
-
-# Deleting a node
-def deleteNode(root, key):
-
-    # Return if the tree is empty
-    if root is None:
-        return root
-
-    # Find the node to be deleted
-    if key < root.key:
-        root.left = deleteNode(root.left, key)
-    elif(key > root.key):
-        root.right = deleteNode(root.right, key)
-    else:
-        # If the node is with only one child or no child
-        if root.left is None:
-            temp = root.right
-            root = None
-            return temp
-
-        elif root.right is None:
-            temp = root.left
-            root = None
-            return temp
-
-        # If the node has two children,
-        # place the inorder successor in position of the node to be deleted
-        temp = minValueNode(root.right)
-
-        root.key = temp.key
-
-        # Delete the inorder successor
-        root.right = deleteNode(root.right, temp.key)
-
-    return root
-
-
-root = None
-root = insert(root, 1)
-root = insert(root, 2)
-root = insert(root, 3)
-root = insert(root, 4)
-root = insert(root, 5)
-root = insert(root, 6)
-root = insert(root, 7)
-root = insert(root, 8)
-
-print("Inorder traversal: ", end=' ')
-inorder(root)
+if __name__ == "__main__":
+    bt = BinaryTree()
+    bt.create_tree()
+    print("\nInorder Traversal")
+    bt.inorder(bt.root)
+    print("\nPreorder Traversal")
+    bt.preorder(bt.root)
+    print("\nPostorder Traversal")
+    bt.postorder(bt.root)
+    print("\nLevel Order Traversal")
+    bt.levelorder(bt.root)
