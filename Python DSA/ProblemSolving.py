@@ -304,6 +304,14 @@ def largestDivisibleSubset(nums):
     return max(dp, key=len)  # Return the largest subset found
 
 # Test the function
-nums = [1, 2, 3, 4, 6, 8, 12]
-print("Largest Divisible Subset:", largestDivisibleSubset(nums))
+#nums = [1, 2, 3, 4, 6, 8, 12]
+#print("Largest Divisible Subset:", largestDivisibleSubset(nums))
 
+def binaryToDecimal(s):
+    op=0
+    for idx,val in enumerate(s[::-1]):
+        if val=='1':
+            op+=2**(idx)
+    return op
+
+print(binaryToDecimal("1010"))
